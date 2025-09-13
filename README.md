@@ -1,17 +1,47 @@
-# ai-assistant-2025
+# 三四五：基于大模型的 AI 助手
 
-请按照网络学堂-课程文件当中的大作业文档完成大作业。如有任何问题，请在网络学堂讨论区的大作业讨论贴中发贴求助，请在你的贴子中详细描述你遇到的问题、环境配置情况，以及完整的报错信息。
+清华大学软件学院2025夏《程序设计实践》课程
 
+三四五组大作业：基于大模型的 AI 助手
 
+## 一、项目介绍
 
-后续成绩复议等问题可以联系助教：
+本项目构建了一个多模态 AI 助手。助手能够支持文本聊天、图片生成、语音交互、网页总结、文件问答、函数调用以及图像分类等功能，结合 LocalAI 提供的 API，实现本地化、可交互的智能助手系统。
 
-熊翊哲 xiongyizhe2001@163.com
+## 二、环境配置与运行方式
 
+### 2.1 启动 LocalAI 模型服务
 
-## 运行说明
+1. 将仓库 clone 到本地
 
-### API Key
+2. 安装 [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+3. 下载[模型文件](https://cloud.tsinghua.edu.cn/f/690d4fe1fab241268d56/?dl=1)并解压至 LocalAI/models 文件夹
+
+4. 运行各个模型
+
+   ```bash
+   cd LocalAI
+   docker compose up -d --pull always
+   ```
+
+* 默认接口地址为 http://localhost:8080。可通过以下命令检测：
+
+  ```bash
+  curl http://localhost:8080/models
+  ```
+
+### 2.2 安装 Python 依赖
+
+建议使用 Conda 管理环境
+
+```bash
+conda create -n ai-assistant python=3.12
+conda activate ai-assistant
+pip install -r requirements.txt
+```
+
+### 2.3 配置 API Key
 
 * 在 `chat.py` 的第 8 行，填入你的 DeepSeek API Key
 
@@ -59,4 +89,40 @@
   WEATHER_NOW_URL = f"https://{API_HOST}/v7/weather/now"
   ```
   
-  
+
+### 2.4 配置 LeNet 模型
+
+将 lenet 模型参数文件放在目录下，修改 `mnist.py` 中的模型路径
+
+### 2.5 启动 AI 助手
+
+```bash
+python app.py
+```
+
+打开命令行输出的链接（一般为 http://127.0.0.1:7860）即可访问助手界面。
+
+## 三、实现功能
+
+**正常聊天**：调用大语言模型（deepseek）进行多轮对话。
+
+**流式传输**：边生成边显示，提高交互体验。
+
+**网络搜索**：通过 `/search content` 获取实时搜索结果并回答。
+
+**网页总结**：通过 `/fetch url` 提取网页内容并生成摘要。
+
+**图片生成**：通过 `/image prompt` 使用 Stable Diffusion 生成图片。
+
+**语音输入**：上传 `.wav` 文件，实现语音转文字。
+
+**语音输出**：通过 `/audio content` 生成语音回答。
+
+**文件聊天**：上传 `.txt` 文件，支持总结与基于文件的问答。
+
+**函数调用**：
+
+- `/function What’s the weather like in Beijing?` → 获取实时天气
+- `/function Add a todo: walk` → 管理 TODO 列表
+
+**图片分类**：上传 `.png` 文件，使用 LeNet 对手写数字进行分类。
