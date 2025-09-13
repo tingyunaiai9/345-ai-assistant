@@ -1,0 +1,8 @@
+gradio==5.35.0
+openai==1.102.0
+beautifulsoup4==4.12.2
+requests==2.28.2
+google-search-results==2.4.2
+torch
+torchvision
+opencv-python

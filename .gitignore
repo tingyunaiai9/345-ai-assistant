@@ -1,0 +1,9 @@
+**/__pycache__
+answer
+*.wav
+
+generated/
+img/
+input/
+
+*.zip
